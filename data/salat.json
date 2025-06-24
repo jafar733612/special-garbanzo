@@ -1,1 +1,35 @@
-
+[
+  {
+    "name": "القاعة الذهبية",
+    "address": "صنعاء - شارع الخمسين",
+    "details": "قاعة فاخرة بتصميم ملكي وتجهيزات صوتية وإضاءة متكاملة",
+    "price": 300000,
+    "dates": [
+      { "date": "2025-06-26", "available": true },
+      { "date": "2025-06-27", "available": false },
+      { "date": "2025-06-28", "available": true }
+    ]
+  },
+  {
+    "name": "قاعة النور",
+    "address": "صنعاء - حدة",
+    "details": "قاعة أنيقة ومناسبة للحفلات الصغيرة",
+    "price": 200000,
+    "dates": [
+      { "date": "2025-06-26", "available": false },
+      { "date": "2025-06-27", "available": true },
+      { "date": "2025-06-28", "available": true }
+    ]
+  },
+  {
+    "name": "قاعة الريان",
+    "address": "صنعاء - بيت بوس",
+    "details": "تكييف مركزي - نظام ليزر - عزل صوتي ممتاز",
+    "price": 250000,
+    "dates": [
+      { "date": "2025-06-26", "available": true },
+      { "date": "2025-06-27", "available": true },
+      { "date": "2025-06-28", "available": false }
+    ]
+  }
+]
