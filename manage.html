@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>إدارة الأصناف - XL Joys</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <h2 style="text-align: center; padding: 20px;">إدارة الأصناف - مالك القسم</h2>
+  </header>
+
+  <main style="padding: 20px;">
+    <div id="ownerSectionName" style="font-weight: bold; font-size: 18px; margin-bottom: 20px;"></div>
+
+    <table border="1" cellpadding="10" cellspacing="0" width="100%" style="border-collapse: collapse; background-color: white;">
+      <thead>
+        <tr>
+          <th>اسم الصنف</th>
+          <th>المواصفات</th>
+          <th>السعر</th>
+          <th>الوقت المتاح</th>
+          <th>إجراءات</th>
+        </tr>
+      </thead>
+      <tbody id="itemsTableBody"></tbody>
+    </table>
+
+    <h3 style="margin-top: 30px;">إضافة صنف جديد</h3>
+    <form id="addItemForm" style="max-width: 600px;">
+      <label>اسم الصنف:</label><br />
+      <input type="text" id="itemName" required /><br />
+
+      <label>المواصفات:</label><br />
+      <textarea id="itemSpecs" rows="3" required></textarea><br />
+
+      <label>السعر:</label><br />
+      <input type="number" id="itemPrice" required /><br />
+
+      <label>الوقت المتاح (مثلاً: 09:00-21:00):</label><br />
+      <input type="text" id="itemAvailableTime" required /><br /><br />
+
+      <button type="submit">إضافة الصنف</button>
+    </form>
+  </main>
+
+  <script>
+    // قراءة القسم من الرابط
+    const urlParams = new URLSearchParams(window.location.search);
+    const section = urlParams.get('section');
+    const sectionNames = {
+      salat: 'الصالات',
+      music: 'الفرق الغنائية',
+      decoration: 'الكوشات ومحلات الزينة',
+      photography: 'الفرق التصويرية',
+      printing: 'الطباعة',
+      drinks: 'الماء والمشروبات',
+      cakes: 'التورته والحلويات',
+      flowers: 'الفل والورد الطبيعي'
+    };
+    document.getElementById('ownerSectionName').textContent = 'قسم: ' + (sectionNames[section] || 'غير معروف');
+
+    // جلب البيانات من localStorage (تخزين الأصناف حسب القسم)
+    let items = JSON.parse(localStorage.getItem(`items_${section}`)) || [];
+
+    const itemsTableBody = document.getElementById('itemsTableBody');
+
+    function renderItems() {
+      itemsTableBody.innerHTML = '';
+      items.forEach((item, idx) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.name}</td>
+          <td>${item.specs}</td>
+          <td>${item.price}</td>
+          <td>${item.availableTime}</td>
+          <td>
+            <button onclick="editItem(${idx})">تعديل</button>
+            <button onclick="deleteItem(${idx})">حذف</button>
+          </td>
+        `;
+        itemsTableBody.appendChild(row);
+      });
+    }
+
+    function saveItems() {
+      localStorage.setItem(`items_${section}`, JSON.stringify(items));
+    }
+
+    function editItem(index) {
+      const item = items[index];
+      const newName = prompt('تعديل اسم الصنف:', item.name);
+      if (newName === null) return;
+      const newSpecs = prompt('تعديل المواصفات:', item.specs);
+      if (newSpecs === null) return;
+      const newPrice = prompt('تعديل السعر:', item.price);
+      if (newPrice === null) return;
+      const newTime = prompt('تعديل الوقت المتاح:', item.availableTime);
+      if (newTime === null) return;
+
+      items[index] = {
+        name: newName,
+        specs: newSpecs,
+        price: parseFloat(newPrice),
+        availableTime: newTime
+      };
+      saveItems();
+      renderItems();
+    }
+
+    function deleteItem(index) {
+      if (confirm('هل تريد حذف هذا الصنف؟')) {
+        items.splice(index, 1);
+        saveItems();
+        renderItems();
+      }
+    }
+
+    document.getElementById('addItemForm').onsubmit = function(e) {
+      e.preventDefault();
+      const name = document.getElementById('itemName').value.trim();
+      const specs = document.getElementById('itemSpecs').value.trim();
+      const price = parseFloat(document.getElementById('itemPrice').value);
+      const availableTime = document.getElementById('itemAvailableTime').value.trim();
+
+      if (!name || !specs || isNaN(price) || !availableTime) {
+        alert('يرجى تعبئة جميع الحقول بشكل صحيح');
+        return;
+      }
+
+      items.push({ name, specs, price, availableTime });
+      saveItems();
+      renderItems();
+
+      e.target.reset();
+    };
+
+    renderItems();
+  </script>
+</body>
+</html>

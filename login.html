@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>دخول مالك الصنف - XL Joys</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <main style="padding: 20px;">
+    <h2 style="text-align: center;">دخول مالك الصنف</h2>
+
+    <form id="ownerLoginForm" style="max-width: 400px; margin: 20px auto;">
+      <label for="ownerSection">اختر القسم:</label>
+      <select id="ownerSection" required>
+        <option value="" disabled selected>اختر القسم</option>
+        <option value="salat">الصالات</option>
+        <option value="music">الفرق الغنائية</option>
+        <option value="decoration">الكوشات ومحلات الزينة</option>
+        <option value="photography">الفرق التصويرية</option>
+        <option value="printing">الطباعة</option>
+        <option value="drinks">الماء والمشروبات</option>
+        <option value="cakes">التورته والحلويات</option>
+        <option value="flowers">الفل والورد الطبيعي</option>
+      </select>
+
+      <label for="ownerPassword">كلمة السر الموحدة:</label>
+      <input type="password" id="ownerPassword" required placeholder="أدخل كلمة السر الموحدة" />
+
+      <button type="submit">دخول</button>
+    </form>
+
+    <script>
+      const unifiedPassword = "1234"; // كلمة السر الموحدة
+
+      document.getElementById("ownerLoginForm").onsubmit = function(e) {
+        e.preventDefault();
+        const section = document.getElementById("ownerSection").value;
+        const password = document.getElementById("ownerPassword").value;
+
+        if(password === unifiedPassword && section) {
+          alert("تم تسجيل الدخول إلى قسم: " + section);
+          // توجه إلى صفحة الإدارة الخاصة بالقسم (يمكن تعديل الرابط حسب التطبيق)
+          window.location.href = `/owner/manage.html?section=${section}`;
+        } else {
+          alert("كلمة السر غير صحيحة أو القسم غير محدد.");
+        }
+      };
+    </script>
+  </main>
+</body>
+</html>
