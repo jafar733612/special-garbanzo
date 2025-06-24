@@ -6,19 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>XL Joys - الكبير</title>
   <link rel="stylesheet" href="css/style.css" />
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-      navigator.serviceWorker.register('service-worker.js').then(function(registration) {
-        console.log('ServiceWorker مسجّل بنجاح:', registration.scope);
-      }, function(error) {
-        console.log('فشل تسجيل ServiceWorker:', error);
+
+  <!-- تفعيل الخدمة بدون إنترنت -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+          console.log('ServiceWorker مسجّل بنجاح:', registration.scope);
+        }, function(error) {
+          console.log('فشل تسجيل ServiceWorker:', error);
+        });
       });
-    });
-  }
-</script>
+    }
+  </script>
 </head>
 <body>
+
   <header>
     <button id="menuBtn" class="menu-btn">&#9776;</button>
     <input type="text" id="searchInput" placeholder="ابحث عن صنف أو تاريخ" />
@@ -47,67 +50,54 @@
     <div class="category-card" onclick="location.href='category.html?section=flowers'">الفل والورد الطبيعي</div>
   </section>
 
+  <section id="itemsSection" style="padding: 20px;">
+    <h2 style="text-align: center;">الأصناف المتاحة</h2>
+    <table border="1" cellpadding="10" cellspacing="0" width="100%" style="border-collapse: collapse; margin-top: 20px; background: white;">
+      <thead style="background: #f0f0f0;">
+        <tr>
+          <th>الاسم</th>
+          <th>العنوان</th>
+          <th>التفاصيل</th>
+          <th>السعر</th>
+          <th>التواريخ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>صالة الأحلام</td>
+          <td>صنعاء - شارع الزبيري</td>
+          <td>صالة كبيرة تتسع لـ 500 شخص</td>
+          <td>150,000 ريال</td>
+          <td>
+            <button class="toggle-calendar">عرض التواريخ</button>
+            <div class="calendar-container" style="display: none; margin-top: 10px;">
+              <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; background-color: #fefefe;">
+                <thead><tr><th colspan="7">يونيو 2025</th></tr></thead>
+                <tr>
+                  <td style="color:red;">1</td><td style="color:green;">2</td><td>3</td><td>4</td><td>5</td><td>6</td><td style="color:green;">7</td>
+                </tr>
+                <tr>
+                  <td>8</td><td>9</td><td style="color:red;">10</td><td>11</td><td>12</td><td style="color:green;">13</td><td>14</td>
+                </tr>
+                <!-- بقية الأيام -->
+              </table>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
   <script src="js/script.js"></script>
 
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js')
-          .then(function(registration) {
-            console.log('Service Worker registered with scope:', registration.scope);
-          })
-          .catch(function(error) {
-            console.log('Service Worker registration failed:', error);
-          });
-      }
-    </script>
-    
-
-<section id="itemsSection" style="padding: 20px;">
-  <h2 style="text-align: center;">الأصناف المتاحة</h2>
-  <table border="1" cellpadding="10" cellspacing="0" width="100%" style="border-collapse: collapse; margin-top: 20px; background: white;">
-    <thead style="background: #f0f0f0;">
-      <tr>
-        <th>الاسم</th>
-        <th>العنوان</th>
-        <th>التفاصيل</th>
-        <th>السعر</th>
-        <th>التواريخ</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>صالة الأحلام</td>
-        <td>صنعاء - شارع الزبيري</td>
-        <td>صالة كبيرة تتسع لـ 500 شخص</td>
-        <td>150,000 ريال</td>
-        <td>
-          <button class="toggle-calendar">عرض التواريخ</button>
-          <div class="calendar-container" style="display: none; margin-top: 10px;">
-            <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; background-color: #fefefe;">
-              <thead><tr><th colspan="7">يونيو 2025</th></tr></thead>
-              <tr>
-                <td style="color:red;">1</td><td style="color:green;">2</td><td>3</td><td>4</td><td>5</td><td>6</td><td style="color:green;">7</td>
-              </tr>
-              <tr>
-                <td>8</td><td>9</td><td style="color:red;">10</td><td>11</td><td>12</td><td style="color:green;">13</td><td>14</td>
-              </tr>
-              <!-- بقية الأيام -->
-            </table>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
-<script>
-  document.querySelectorAll('.toggle-calendar').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const cal = btn.nextElementSibling;
-      cal.style.display = (cal.style.display === 'none') ? 'block' : 'none';
+  <script>
+    document.querySelectorAll('.toggle-calendar').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cal = btn.nextElementSibling;
+        cal.style.display = (cal.style.display === 'none') ? 'block' : 'none';
+      });
     });
-  });
-</script>
+  </script>
 
 </body>
 </html>
