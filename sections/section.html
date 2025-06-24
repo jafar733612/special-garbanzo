@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>الأقسام - XL Joys</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f8f8f8;
+    }
+
+    .section-card {
+      display: flex;
+      flex-direction: row-reverse;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .section-card .info {
+      flex: 1;
+    }
+
+    .section-card .info h3 {
+      margin: 0 0 8px;
+    }
+
+    .section-card .info p {
+      margin: 4px 0;
+      color: #444;
+    }
+
+    .section-card .dates {
+      min-width: 120px;
+    }
+
+    .section-card select {
+      padding: 6px;
+      border-radius: 6px;
+    }
+
+    .status-box {
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .available {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .unavailable {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>الأقسام المتوفرة</h2>
+
+  <div class="section-card">
+    <div class="info">
+      <h3>الذهبية</h3>
+      <p><strong>العنوان:</strong> صنعاء - شارع الخمسين</p>
+      <p><strong>التفاصيل:</strong> صالة فاخرة بتجهيزات كاملة</p>
+      <p><strong>السعر:</strong> 300000 ريال</p>
+    </div>
+    <div class="dates">
+      <select onchange="checkAvailability(this)">
+        <option disabled selected>اختر تاريخاً</option>
+        <option value="2025-06-26" data-available="true">2025-06-26</option>
+        <option value="2025-06-27" data-available="false">2025-06-27</option>
+      </select>
+      <div class="status-box" id="status-box"></div>
+    </div>
+  </div>
+
+  <script>
+    function checkAvailability(select) {
+      const statusBox = select.nextElementSibling;
+      const selectedOption = select.options[select.selectedIndex];
+      const isAvailable = selectedOption.getAttribute('data-available') === 'true';
+
+      if (isAvailable) {
+        statusBox.textContent = "متاح - احجز الآن";
+        statusBox.className = "status-box available";
+      } else {
+        statusBox.textContent = "غير متاح";
+        statusBox.className = "status-box unavailable";
+      }
+    }
+  </script>
+
+</body>
+</html>
